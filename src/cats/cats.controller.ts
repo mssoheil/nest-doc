@@ -1,4 +1,4 @@
-import { Controller, Get, Res, Req, HttpCode, Header, Redirect } from '@nestjs/common';
+import { Controller, Get, Res, Req, HttpCode, Header, Redirect, Query } from '@nestjs/common';
 
 @Controller('ca*s')
 export class CatsController {
@@ -14,8 +14,20 @@ export class CatsController {
 	@Header("myHeader", "none")
 	@Header("myCustomHeader", "10")
 	@Redirect('https://google.com', 301)
-	findAllBlackCats(): string {
+	findAllBlackCats(@Query("redirect") redirect): any {
 		
-		return "hello black cats"
+		// return "hello black cats"
+		if (redirect === "yahoo") {
+			return {
+				url: "http://yahoo.com",
+				statusCode: 302
+			}
+		} else {
+			return {
+				url: "http://w3schools.com",
+				statusCode: 302
+			}
+		}
+		
 	}
 }
